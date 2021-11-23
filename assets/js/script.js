@@ -1,3 +1,24 @@
+function updatedTime() {
+    let today = moment();
+    
+    $("#currentDay").text(today.format("dddd, MMMM Do YYYY, h:mm.ss"));
+    
+    let now = moment().format("kk");
+    for (let i = 0; i < scheduleElArray.length; i++) {
+        scheduleElArray[i].removeClass("future past present");
+        
+        if (now > scheduleElArray[i].data("hour")) {
+            scheduleElArray[i].addClass("past");
+            
+        } else if (now === scheduleElArray[i].attr("data-hour")) {
+            scheduleElArray[i].addClass("present");
+            
+        } else {
+            scheduleElArray[i].addClass("future");
+        }
+    }   
+}
+
 let scheduleElArray = [
     schedule9am,
     schedule10am,
@@ -20,22 +41,28 @@ let schedule3pm = $("#3PM");
 let schedule4pm = $("#4PM");
 let schedule5pm = $("#5PM");
 
-function updatedTime() {
-    let today = moment();
-    
-    $("#currentDay").text(today.format("dddd, MMMM Do YYYY, h:mm.ss"));
-    
-}
-
-function renderLastRegistered() {
-    for (let el of scheduleElArray) {
-        el.val(localStorage.getItem("time block " + el.data("hour")));
-
-    }
-}
+let saveBttn = $(".save-icon");
+let containerEl = $(".container");
 
 renderLastRegistered();
 updatedTime();
 setInterval(updatedTime, 1000);
 
-let containerEl = $(".container");
+function renderLastRegistered() {
+    for (let el of scheduleElArray) {
+        el.val(localStorage.getItem("time block " + el.data("hour")));
+    }
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    let btnClicked = $(event.currentTarget);
+
+    let targetText = btnClicked.siblings("textarea");
+ 
+    let targetTimeBlock = targetText.data("hour");
+
+    localStorage.setItem("time block " +  targetTimeBlock, targetText.val());
+} 
+saveBttn.on("click", handleFormSubmit);
