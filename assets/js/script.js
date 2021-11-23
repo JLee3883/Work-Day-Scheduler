@@ -19,17 +19,6 @@ function updatedTime() {
     }   
 }
 
-let scheduleElArray = [
-    schedule9am,
-    schedule10am,
-    schedule11am,
-    schedule12pm,
-    schedule1pm,
-    schedule2pm,
-    schedule3pm,
-    schedule4pm,
-    schedule5pm,
-];                  
 
 let schedule9am = $("#9AM");
 let schedule10am = $("#10AM");
@@ -43,6 +32,18 @@ let schedule5pm = $("#5PM");
 
 let saveBttn = $(".save-icon");
 let containerEl = $(".container");
+
+let scheduleElArray = [
+    schedule9am,
+    schedule10am,
+    schedule11am,
+    schedule12pm,
+    schedule1pm,
+    schedule2pm,
+    schedule3pm,
+    schedule4pm,
+    schedule5pm,
+];                  
 
 renderLastRegistered();
 updatedTime();
